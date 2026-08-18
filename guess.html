@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess Master</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+</head>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        margin: 0;
+        line-height: 1.6;
+        background-color: #0a0c10;
+        color: #e1e2e9;
+        font-family: 'Press Start 2P', cursive;
+    }
+
+    header {
+        background-color: #141824;
+        display: flex;
+        justify-content: space-between;
+        top: 0;
+        padding: 0px;
+        border-bottom: 1px solid #22293a;
+    }
+
+    ul {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+    }
+
+    li {
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .logo {
+        font-size: 1.25rem;
+        font-weight: 900;
+        color: #5865f2;
+        letter-spacing: 1px;
+    }
+
+    li:hover {
+        background-color: #22293a;
+        color: white;
+        border-radius: 4px;
+        padding: 2px;
+    }
+
+    nav {
+        align-items: center;
+        justify-content: space-between;
+        display: flex;
+        padding: 8px 24px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .contents {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+    }
+
+    main {
+        margin: 0 auto;
+        padding: 0 24px;
+        max-width: 600px;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        min-height: 450px;
+        background-color: #141824;
+        border: 1px solid #141824;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+        margin-top: 4rem;
+        border-radius: 24px;
+        padding: 32px;
+        text-align: center;
+    }
+
+    .container-header p {
+        font-size: 0.85rem;
+        color: #8b9bb4;
+        margin-top: 4px;
+    }
+
+    .status h2 {
+        font-size: 1rem;
+        color: #00e5a3;
+        min-height: 28px;
+    }
+
+    .btns {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    input[type="number"] {
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #22293a;
+        background-color: #1c2230;
+        font-family: inherit;
+        color: white;
+        font-size: 1rem;
+        text-align: center;
+        outline: none;
+        transition: 0.2s border-color;
+    }
+
+    input[type="number"]:focus {
+        border-color: #5865f2;
+        box-shadow: 0 0 12px rgba(88, 101, 242, 0.25);
+    }
+
+    input[type="number"]:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    button {
+        cursor: pointer;
+        padding: 12px;
+        border-radius: 8px;
+        border: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: 0.2s ease;
+    }
+
+    #submitButton {
+        background-color: #5865f2;
+        color: white;
+    }
+
+    #submitButton:hover:not(:disabled) {
+        background-color: #4752c4;
+        box-shadow: 0 0 14px rgba(88, 101, 242, 0.4);
+    }
+
+    #submitButton:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    #restartButton {
+        background-color: #ff3860;
+        color: white;
+        display: none;
+    }
+
+    #restartButton:hover {
+        background-color: #e0284f;
+        box-shadow: 0 0 14px rgba(255, 56, 96, 0.4);
+    }
+
+    .stats-footer {
+        width: 100%;
+        max-width: 280px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 16px;
+        border-top: 1px solid #22293a;
+    }
+
+    .stats-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .stats-label {
+        font-size: 12px;
+        letter-spacing: 0.05em;
+        color: #8b9bb4;
+        font-weight: 600;
+    }
+
+    .lives-value {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .heart-icon {
+        color: #ff3860;
+        font-variation-settings: 'FILL' 1;
+        font-size: 18px;
+    }
+</style>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <h2 class="logo">GuessMaster</h2>
+            <div class="contents">
+                <ul>
+                    <li class="help">❔</li>
+                    <li class="settings">⚙️</li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <div class="container-header">
+                <h2>Guess A Number</h2>
+                <p>Pick a number between 1 and 10.</p>
+            </div>
+
+            <div class="status">
+                <h2 id="comment">Enter your first guess</h2>
+            </div>
+
+            <div class="btns">
+                <input type="number" id="guessNumber" min="1" max="10" placeholder="Enter Number..." autofocus>
+                <button id="submitButton">Submit</button>
+                <button id="restartButton">Reset</button>
+            </div>
+
+            <div class="stats-footer">
+                <div class="stats-card">
+                    <span class="stats-label">LIVES</span>
+                    <div class="lives-value">
+                        <span class="material-symbols-outlined heart-icon">favorite</span>
+                        <span id="chancesCount">3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let MAX_CHANCES = 3
+        let chances = MAX_CHANCES
+        let secret = Math.floor(Math.random() * 10) + 1
+
+        let hint = document.getElementById("comment")
+        let input = document.getElementById("guessNumber")
+        let submitButton = document.getElementById("submitButton")
+        let restartButton = document.getElementById("restartButton")
+        let chancesCount = document.getElementById("chancesCount")
+
+        function endGame() {
+            submitButton.disabled = true
+            input.disabled = true
+            restartButton.style.display = "block"
+        }
+
+        function resetGame() {
+            secret = Math.floor(Math.random() * 10) + 1
+            chances = MAX_CHANCES
+            chancesCount.textContent = chances
+            input.value = ""
+            hint.textContent = "Enter your first guess!"
+            submitButton.disabled = false
+            input.disabled = false
+            restartButton.style.display = "none"
+            input.focus()
+        }
+
+        function handleGuess() {
+            let guess = Number(input.value)
+
+            if (!input.value || guess < 1 || guess > 10) {
+                hint.textContent = "Enter a valid number from 1 to 10..."
+                input.value = ""
+                return
+            }
+
+            if (guess === secret) {
+                hint.textContent = "🎉 Correct! You guessed the number!"
+                endGame()
+                return
+            }
+
+            chances -= 1
+            chancesCount.textContent = chances
+
+            if (chances === 0) {
+                hint.textContent = `💀 Game Over! The correct number was ${secret}.`
+                endGame()
+                return
+            }
+
+            let difference = Math.abs(secret - guess)
+            if (guess < secret) {
+                hint.textContent = difference <= 2 ? "Too low, but you are close" : "Too low! Try a bigger number"
+            } else {
+                hint.textContent = difference <= 2 ? "Too high, but you are close" : "Too high! Try a smaller number"
+            }
+
+            input.value = ""
+            input.focus()
+        }
+
+        submitButton.addEventListener("click", handleGuess)
+
+        input.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                handleGuess()
+            }
+        })
+
+
+
+        restartButton.addEventListener("click", resetGame)
+    </script>
+</body>
+
+</html>
