@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <link rel="icon" href="pics/pp.jpg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+
+<body>
+    <header>
+        <nav class="navbar"> 
+            <h2 class="logo">THEARENA</h2>
+            <ul>
+                <li class="leaderboard">🏆</li>
+                <li class="settings">⚙️</li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="area-container">
+
+        <section class="scoreboard">
+            <div class="card">
+                <span class="score-label">Player</span>
+                <span id="playerScore" class="score-num">0</span>
+            </div>
+            <div class="dash">-</div>
+            <div class="card">
+                <span class="score-label">CPU</span>
+                <span id="cpuScore" class="score-num">0</span>
+            </div>
+        </section>
+
+        <section class="comment">
+            <h2 id="commentText">PICK YOUR MOVE!</h2>
+            </div>
+        </section>
+
+        <section class="arena">
+            <div class="fighter" id="playerSlot">❔</div>
+            <div class="vs">VS</div>
+            <div class="fighter" id="cpuSlot">❔</div>
+        </section>
+
+        <section>
+            <div class="weapons">
+                <button class="btn choice" id="rock">
+                    <span class="icon">✊</span>
+                    <span>Rock</span>
+                </button>
+                <button class="btn choice" id="paper">
+                    <span class="icon">🖐️</span>
+                    <span>Paper</span>
+                </button>
+                <button class="btn choice" id="scissors">
+                    <span class="icon">✌️</span>
+                    <span>Scissors</span>
+                </button>
+            </div>
+
+            <button id="restart" class="btn">
+                <span>Play Again 🔁</span>
+            </button>
+        </section>
+
+    </main>
+
+
+
+    <script>
+        let playerScore = 0
+        let cpuScore = 0
+        let moves = ["rock", "paper", "scissors"]
+        let icons = {
+            rock: "✊",
+            paper: "🖐️",
+            scissors: "✌️"
+        }
+
+        let comment = document.getElementById("commentText")
+        let restart = document.getElementById("restart")
+        let playerScoreDisplay = document.getElementById("playerScore")
+        let cpuScoreDisplay = document.getElementById("cpuScore")
+        let playerSlot = document.getElementById("playerSlot")
+        let cpuSlot = document.getElementById("cpuSlot")
+        let rock = document.getElementById("rock")
+        let paper = document.getElementById("paper")
+        let scissors = document.getElementById("scissors")
+
+        let humansChoice = ''
+        let computersMove = ''
+
+        function start() {
+            document.querySelectorAll(".choice").forEach((choice) => {
+                choice.addEventListener("click", () => {
+                    humansChoice = choice.id
+
+                    let randomIndex = Math.floor(Math.random() * 3)
+                    computersMove = moves[randomIndex]
+
+                    playerSlot.textContent = icons[humansChoice]
+                    cpuSlot.textContent = icons[computersMove]
+
+                    let result = computeWinner(humansChoice)
+
+                    if (result === 'draw') {
+                        comment.innerText = 'Draw 🤝'
+                    } else {
+                        if (result.winner === 'human') {
+                            playerScore++
+                            playerScoreDisplay.innerText = playerScore
+                        } else {
+                            cpuScore++
+                            cpuScoreDisplay.innerText = cpuScore
+                        }
+                        comment.innerText = `Winner: ${result.winner} ${result.winnersMove}\nLoser: ${result.loser} ${result.losersMove}`
+                    }
+                    document.querySelector(".weapons").style.display = "none"
+                    restart.style.display = "flex"
+                })
+            })
+        }
+
+        function computeWinner(move) {
+            let rockWins = 'scissors'
+            let paperWins = 'rock'
+            let scissorsWins = 'paper'
+
+            let winner = ''
+
+            if (move === computersMove) {
+                winner = 'draw'
+            } else if (move === 'rock') {
+                winner = computersMove === rockWins ? 'human' : 'computer'
+            } else if (move === 'paper') {
+                winner = computersMove === paperWins ? 'human' : 'computer'
+            } else if (move === 'scissors') {
+                winner = computersMove === scissorsWins ? 'human' : 'computer'
+            }
+
+            return winner === 'draw' ? 'draw' : {
+                winner: winner,
+                winnersMove: getMoveEmoji(winner === 'human' ? humansChoice : computersMove),
+                loser: winner === 'human' ? 'computer' : 'human',
+                losersMove: getMoveEmoji(winner === 'human' ? computersMove : humansChoice)
+            }
+        }
+
+        function getMoveEmoji(move) {
+            return icons[move] || '❔'
+        }
+
+        restart.addEventListener("click", () => {
+            document.querySelector(".weapons").style.display = "grid"
+            comment.innerText = 'PICK YOUR MOVE!'
+            playerSlot.textContent = '❔'
+            cpuSlot.textContent = '❔'
+            restart.style.display = 'none'
+        })
+
+        start()
+
+
+    </script>
+</body>
+
+</html>
